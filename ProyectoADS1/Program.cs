@@ -7,8 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSession();
+
+
 builder.Services.AddDbContext<DBADS1Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("cadena")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("cnx")));
 
 var app = builder.Build();
 
@@ -19,12 +22,14 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseStaticFiles();
 
+app.UseSession();
+
 app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Inspeccion}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Index}/{id?}");
 
 app.Run();

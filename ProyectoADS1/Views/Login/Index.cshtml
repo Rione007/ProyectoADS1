@@ -1,19 +1,27 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Iniciar Sesión";
 }
 
-<div class="background">
-    <div class="login-box">
-        <h2>Iniciar Sesión</h2>
-        <form method="post">
-            <label for="username">Nombre de Usuario</label>
-            <input type="text" name="username" placeholder="Ingresar Nombre" required>
+<h2 class="text-center mt-4">Iniciar Sesión</h2>
+
+<div class="d-flex justify-content-center mt-4">
+    <form method="post" class="border p-4 rounded shadow-sm" style="width: 350px;">
+        <div class="form-group mb-3">
+            <label for="correo">Correo</label>
+            <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo" required />
+        </div>
+
+        <div class="form-group mb-3">
             <label for="password">Contraseña</label>
-            <input type="password" name="password" placeholder="Ingresar Contraseña" required>
-            <button type="submit">Ingresar</button>
-        </form>
-    </div>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Ingrese su contraseña" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger mt-3 text-center">@ViewBag.Error</div>
+        }
+    </form>
 </div>
-
-

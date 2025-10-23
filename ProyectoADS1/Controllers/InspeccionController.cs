@@ -6,7 +6,7 @@ using ProyectoADS1.Models;
 
 namespace ProyectoADS1.Controllers
 {
-    public class InspeccionController : Controller
+    public class InspeccionController : BaseController
     {
         DBADS1Context context;
         public InspeccionController(DBADS1Context contexto)

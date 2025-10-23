@@ -5,7 +5,7 @@ using ProyectoADS1.Models;
 
 namespace ProyectoADS1.Controllers
 {
-    public class InformeController : Controller
+    public class InformeController : BaseController
     {
         DBADS1Context context;
 

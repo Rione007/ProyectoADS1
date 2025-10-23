@@ -5,7 +5,7 @@ using ProyectoADS1.Models;
 
 namespace ProyectoADS1.Controllers
 {
-    public class MemorandumController : Controller
+    public class MemorandumController : BaseController
     {
         DBADS1Context context;
         public MemorandumController(DBADS1Context context)

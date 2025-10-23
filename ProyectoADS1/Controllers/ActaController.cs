@@ -5,7 +5,7 @@ using ProyectoADS1.Models;
 
 namespace ProyectoADS1.Controllers
 {
-    public class ActaController : Controller
+    public class ActaController : BaseController
     {
         DBADS1Context context;
         public ActaController(DBADS1Context context)

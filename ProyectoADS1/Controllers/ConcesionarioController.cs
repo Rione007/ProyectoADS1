@@ -5,7 +5,7 @@ using ProyectoADS1.Models;
 
 namespace ProyectoADS1.Controllers
 {
-    public class ConcesionarioController : Controller
+    public class ConcesionarioController : BaseController
     {
         private readonly DBADS1Context context;
         public ConcesionarioController(DBADS1Context context)
