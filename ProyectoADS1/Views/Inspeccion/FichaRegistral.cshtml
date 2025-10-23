@@ -1,107 +1,96 @@
-﻿@model ProyectoADS1.Models.FichaInspeccion
+﻿<div class="container mt-4" style="max-width: 900px; font-family: 'Cambria', serif; background-color: white; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.2); border-radius: 6px;">
 
-@{
-    ViewData["Title"] = "FichaRegistral";
-}
+    <div class="text-center mb-4">
+        <h3 style="text-transform: uppercase; font-weight: bold;">Ficha de Inspección</h3>
+        <hr style="border: 1px solid #000;">
+    </div>
 
-<h1>FichaRegistral</h1>
+    <section class="mb-4">
+        <h5 style="border-bottom: 2px solid #000; padding-bottom: 4px;">1. Detalles de la Inspección</h5>
+        <table class="table table-borderless" style="font-size: 15px;">
+            <tr>
+                <td><strong>ID Inspección:</strong></td>
+                <td>@Model.IdInspeccion</td>
+                <td><strong>Estado:</strong></td>
+                <td>@Model.Estado</td>
+            </tr>
+            <tr>
+                <td><strong>Área Supervisada:</strong></td>
+                <td colspan="3">@Model.AreaSupervisada</td>
+            </tr>
+            <tr>
+                <td><strong>Fecha Programada:</strong></td>
+                <td>@Model.FechaProgramada</td>
+                <td><strong>Motivo de Inspección:</strong></td>
+                <td>@Model.MotivoInspeccion</td>
+            </tr>
+        </table>
+    </section>
 
+    <section class="mb-4">
+        <h5 style="border-bottom: 2px solid #000; padding-bottom: 4px;">2. Datos del Concesionario</h5>
+        <table class="table table-borderless" style="font-size: 15px;">
+            <tr>
+                <td><strong>RUC:</strong></td>
+                <td>@Model.Ruc</td>
+                <td><strong>Nombre Comercial:</strong></td>
+                <td>@Model.NombreComercial</td>
+            </tr>
+            <tr>
+                <td><strong>Razón Social:</strong></td>
+                <td colspan="3">@Model.RazonSocial</td>
+            </tr>
+            <tr>
+                <td><strong>Dirección:</strong></td>
+                <td colspan="3">@Model.Direccion</td>
+            </tr>
+            <tr>
+                <td><strong>Departamento:</strong></td>
+                <td>@Model.Departamento</td>
+                <td><strong>Provincia:</strong></td>
+                <td>@Model.Provincia</td>
+            </tr>
+            <tr>
+                <td><strong>Teléfono:</strong></td>
+                <td>@Model.Telefono</td>
+                <td><strong>Email:</strong></td>
+                <td>@Model.Email</td>
+            </tr>
+        </table>
+    </section>
 
-<div class="container row">
-    <div class="col-md-10">
+    <hr style="border: 1px solid #000;">
 
-        <div class="form-control">
-            <h5>Detalles de Inspeccion:</h5>
-            <div class="form-control d-flex">
-                <div class="form-group g col-md-3">
-                    <label asp-for="IdInspeccion" class="control-label"></label>
-                    <input asp-for="IdInspeccion" class="form-control col-md-5" readonly />
-                </div>
-                <div class="form-group col-md-3">
-                    <label asp-for="Estado" class="control-label"></label>
-                    <input asp-for="Estado" class="form-control col-md-5" readonly />
-                </div>
-            </div>
-            <div class="row g-3">
-                <div class="form-group col-md-7">
-                    <label asp-for="AreaSupervisada" class="control-label"></label>
-                    <input asp-for="AreaSupervisada" class="form-control" readonly />
-                </div>
-                <div class="form-group col-md-5">
-                    <label asp-for="FechaProgramada" class="control-label"></label>
-                    <input type="date" asp-for="FechaProgramada" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <label asp-for="MotivoInspeccion" class="control-label"></label>
-                    <textarea asp-for="MotivoInspeccion" class="form-control" rows="3" readonly> </textarea>
-                </div>
-            </div>
-        </div>
-
+    <div class="d-flex justify-content-between mt-4">
         <div>
-
-            <div class="form-control">
-                <h5>Datos de Concesionario:</h5>
-                <div class="row g-3">
-                    <div class="form-group col-md-3">
-                        <label asp-for="Ruc" class="control-label"></label>
-                        <input asp-for="Ruc" class="form-control col-md-5" readonly />
-                    </div>
-
-                    <div class="row g-3">
-                        <div class="form-group col-md-4">
-                            <label asp-for="NombreComercial" class="control-label"></label>
-                            <input asp-for="NombreComercial" class="form-control" readonly />
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label asp-for="RazonSocial" class="control-label"></label>
-                            <input asp-for="RazonSocial" class="form-control" readonly />
-                        </div>
-                    </div>
-                    <div class="form-group col-md-8">
-                        <label asp-for="Direccion" class="control-label"></label>
-                        <input asp-for="Direccion" class="form-control" readonly />
-                    </div>
-                    <div class="row g-3">
-                        <div class="form-group col-md-4">
-                            <label asp-for="Departamento" class="control-label"></label>
-                            <input asp-for="Departamento" class="form-control" readonly />
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label asp-for="Provincia" class="control-label"></label>
-                            <input asp-for="Provincia" class="form-control" readonly />
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="form-group col-md-4">
-                            <label asp-for="Telefono" class="control-label"></label>
-                            <input asp-for="Telefono" class="form-control" readonly />
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" readonly />
-                        </div>
-                    </div>
-                    <br />
-                </div>
-            </div>
-
-            <hr />
-
-            <div class="form-group d-flex">
-                <div>
-                    <a class="btn btn-secondary" asp-action="Index">Regresar</a>
-                    <a class="btn btn-primary" asp-action="CrearActa" asp-controller="Acta" asp-route-id="@Model.IdInspeccion">Generar Acta de Inspeccion</a>
-                </div>
-                <div class="ms-auto">
-                    <em>Ultima vez actualizada: </em>
-                    <em class="col-sm-10">
-                        @Html.DisplayFor(model => model.FechaActualizada)
-                    </em>
-                </div>
-
-            </div>
+            <a class="btn btn-secondary" asp-action="Index">Regresar</a>
+            <a class="btn btn-primary" asp-action="CrearActa" asp-controller="Acta" asp-route-id="@Model.IdInspeccion">
+                Generar Acta de Inspección
+            </a>
+        </div>
+        <div class="text-end">
+            <em>Última actualización:</em><br>
+            <strong>@Model.FechaActualizada</strong>
         </div>
     </div>
 </div>
 
+<style>
+    body {
+        background-color: #f2f2f2;
+    }
+
+    .table-borderless td {
+        padding: 6px 8px;
+        vertical-align: top;
+    }
+
+    h5 {
+        font-weight: bold;
+        color: #333;
+    }
+
+    em, strong {
+        color: #222;
+    }
+</style>

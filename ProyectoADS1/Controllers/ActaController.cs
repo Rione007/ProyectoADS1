@@ -39,5 +39,27 @@ namespace ProyectoADS1.Controllers
             var reg = BuscarActa(id);
             return View(reg);
         }
+
+        [HttpPost]
+        public IActionResult ActaDeInspeccion(ActaInspeccion model)
+        {
+            if (ModelState.IsValid)
+            {
+                var acta = context.ActaInspeccions.FirstOrDefault(a => a.IdInspeccion == model.IdInspeccion);
+                if (acta == null) return NotFound();
+
+                acta.Observaciones = model.Observaciones;
+                acta.Recomendaciones = model.Recomendaciones;
+                acta.Conclusiones = model.Conclusiones;
+                acta.FirmaSupervisorImagen = model.FirmaSupervisorImagen;
+                acta.FirmaAdministradoImagen = model.FirmaAdministradoImagen;
+
+                context.SaveChanges();
+                return RedirectToAction("Index", "Inspeccion");
+            }
+
+            return View(model);
+        }
+
     }
 }

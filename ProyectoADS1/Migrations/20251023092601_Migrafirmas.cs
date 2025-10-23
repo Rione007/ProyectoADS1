@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace ProyectoADS1.Migrations
 {
     /// <inheritdoc />
-    public partial class nuevamigra : Migration
+    public partial class Migrafirmas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -93,8 +95,8 @@ namespace ProyectoADS1.Migrations
                     Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Recomendaciones = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Conclusiones = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirmaSupervisor = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
-                    FirmaAdministrado = table.Column<bool>(type: "bit", nullable: true, defaultValue: false)
+                    FirmaSupervisorImagen = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirmaAdministradoImagen = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -155,6 +157,26 @@ namespace ProyectoADS1.Migrations
                         principalTable: "FichaInspeccion",
                         principalColumn: "IdInspeccion");
                 });
+
+            migrationBuilder.InsertData(
+                table: "Concesionario",
+                columns: new[] { "IdConcesionario", "Departamento", "Direccion", "Distrito", "Email", "NombreComercial", "Provincia", "RazonSocial", "RUC", "Telefono" },
+                values: new object[,]
+                {
+                    { 1, "Lima", "Av. Arequipa 1234", "Miraflores", "contacto@postalexpress.com", "Postal Express", "Lima", "Concesionaria Postal Express S.A.C.", "20451234567", "012345678" },
+                    { 2, "Arequipa", "Calle Comercio 456", "Cercado", "info@redcourier.pe", "Red Courier", "Arequipa", "Red Courier Perú E.I.R.L.", "20567891234", "054987654" },
+                    { 3, "Cusco", "Jr. Cusco 321", "Wanchaq", "contacto@andespost.com", "Andes Post", "Cusco", "Servicios Postales Andes S.R.L.", "20678912345", "084567890" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Usuario",
+                columns: new[] { "idUsuario", "activo", "correo", "dni", "nombreUsuario", "password", "rol" },
+                values: new object[] { 1, true, "admincsp@empresa.com", 73613466, "Anderson Villegas Cruz", "admin123", "CoordinadorCSP" });
+
+            migrationBuilder.InsertData(
+                table: "FichaInspeccion",
+                columns: new[] { "IdInspeccion", "AreaSupervisada", "Departamento", "Direccion", "Email", "FechaProgramada", "IdConcesionario", "MotivoInspeccion", "NombreComercial", "Provincia", "RazonSocial", "RUC", "Telefono" },
+                values: new object[] { 1, "Almacén Principal", "Lambayeque", "Av. Central 123", "norte@correo.pe", new DateOnly(2025, 5, 10), 1, "Supervisión rutinaria del local", "Correo Norte SAC", "Chiclayo", "Correo Norte S.A.C.", "20481234567", "074-123456" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_FichaInspeccion_IdConcesionario",

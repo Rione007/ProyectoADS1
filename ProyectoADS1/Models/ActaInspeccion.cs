@@ -18,9 +18,9 @@ public partial class ActaInspeccion
 
     public string Conclusiones { get; set; }
 
-    public bool? FirmaSupervisor { get; set; }
+    public string? FirmaSupervisorImagen { get; set; }
+    public string? FirmaAdministradoImagen { get; set; }
 
-    public bool? FirmaAdministrado { get; set; }
 
     [ForeignKey("IdInspeccion")]
     [InverseProperty("ActaInspeccion")]

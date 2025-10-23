@@ -37,8 +37,6 @@ public partial class DBADS1Context : DbContext
             entity.HasKey(e => e.IdInspeccion).HasName("PK__ActaInsp__2929253F64C3558B");
 
             entity.Property(e => e.IdInspeccion).ValueGeneratedNever();
-            entity.Property(e => e.FirmaAdministrado).HasDefaultValue(false);
-            entity.Property(e => e.FirmaSupervisor).HasDefaultValue(false);
 
             entity.HasOne(d => d.IdInspeccionNavigation).WithOne(p => p.ActaInspeccion)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -108,6 +106,47 @@ public partial class DBADS1Context : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
+
+        // 🔹 Datos iniciales de Concesionarios
+        modelBuilder.Entity<Concesionario>().HasData(
+            new Concesionario { IdConcesionario = 1, NombreComercial = "Postal Express", RazonSocial = "Concesionaria Postal Express S.A.C.", Ruc = "20451234567", Direccion = "Av. Arequipa 1234", Departamento = "Lima", Provincia = "Lima", Distrito = "Miraflores", Telefono = "012345678", Email = "contacto@postalexpress.com" },
+            new Concesionario { IdConcesionario = 2, NombreComercial = "Red Courier", RazonSocial = "Red Courier Perú E.I.R.L.", Ruc = "20567891234", Direccion = "Calle Comercio 456", Departamento = "Arequipa", Provincia = "Arequipa", Distrito = "Cercado", Telefono = "054987654", Email = "info@redcourier.pe" },
+            new Concesionario { IdConcesionario = 3, NombreComercial = "Andes Post", RazonSocial = "Servicios Postales Andes S.R.L.", Ruc = "20678912345", Direccion = "Jr. Cusco 321", Departamento = "Cusco", Provincia = "Cusco", Distrito = "Wanchaq", Telefono = "084567890", Email = "contacto@andespost.com" }
+        );
+
+        // 🔹 Usuario inicial (Admin)
+        modelBuilder.Entity<Usuario>().HasData(
+            new Usuario
+            {
+                IdUsuario = 1,
+                Dni = 73613466,
+                NombreUsuario = "Anderson Villegas Cruz",
+                Correo = "admincsp@empresa.com",
+                Password = "admin123",
+                Rol = "CoordinadorCSP",
+                Activo = true
+            }
+        );
+
+        // 🔹 Fichas iniciales
+        modelBuilder.Entity<FichaInspeccion>().HasData(
+            new FichaInspeccion
+            {
+                IdInspeccion = 1,
+                IdConcesionario = 1,
+                Ruc = "20481234567",
+                NombreComercial = "Correo Norte SAC",
+                RazonSocial = "Correo Norte S.A.C.",
+                Direccion = "Av. Central 123",
+                Departamento = "Lambayeque",
+                Provincia = "Chiclayo",
+                Telefono = "074-123456",
+                Email = "norte@correo.pe",
+                AreaSupervisada = "Almacén Principal",
+                FechaProgramada = new DateOnly(2025, 5, 10),
+                MotivoInspeccion = "Supervisión rutinaria del local"
+            }
+        );
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

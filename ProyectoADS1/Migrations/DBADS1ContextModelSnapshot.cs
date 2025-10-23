@@ -30,15 +30,11 @@ namespace ProyectoADS1.Migrations
                     b.Property<string>("Conclusiones")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("FirmaAdministrado")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    b.Property<string>("FirmaAdministradoImagen")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("FirmaSupervisor")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    b.Property<string>("FirmaSupervisorImagen")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Observaciones")
                         .HasColumnType("nvarchar(max)");
@@ -115,6 +111,53 @@ namespace ProyectoADS1.Migrations
                         .HasName("PK__Concesio__49EF4257A6FA8DDD");
 
                     b.ToTable("Concesionario");
+
+                    b.HasData(
+                        new
+                        {
+                            IdConcesionario = 1,
+                            Departamento = "Lima",
+                            Direccion = "Av. Arequipa 1234",
+                            Distrito = "Miraflores",
+                            Email = "contacto@postalexpress.com",
+                            Estado = false,
+                            FechaRegistro = new DateOnly(1, 1, 1),
+                            NombreComercial = "Postal Express",
+                            Provincia = "Lima",
+                            RazonSocial = "Concesionaria Postal Express S.A.C.",
+                            Ruc = "20451234567",
+                            Telefono = "012345678"
+                        },
+                        new
+                        {
+                            IdConcesionario = 2,
+                            Departamento = "Arequipa",
+                            Direccion = "Calle Comercio 456",
+                            Distrito = "Cercado",
+                            Email = "info@redcourier.pe",
+                            Estado = false,
+                            FechaRegistro = new DateOnly(1, 1, 1),
+                            NombreComercial = "Red Courier",
+                            Provincia = "Arequipa",
+                            RazonSocial = "Red Courier Perú E.I.R.L.",
+                            Ruc = "20567891234",
+                            Telefono = "054987654"
+                        },
+                        new
+                        {
+                            IdConcesionario = 3,
+                            Departamento = "Cusco",
+                            Direccion = "Jr. Cusco 321",
+                            Distrito = "Wanchaq",
+                            Email = "contacto@andespost.com",
+                            Estado = false,
+                            FechaRegistro = new DateOnly(1, 1, 1),
+                            NombreComercial = "Andes Post",
+                            Provincia = "Cusco",
+                            RazonSocial = "Servicios Postales Andes S.R.L.",
+                            Ruc = "20678912345",
+                            Telefono = "084567890"
+                        });
                 });
 
             modelBuilder.Entity("ProyectoADS1.Models.FichaInspeccion", b =>
@@ -198,6 +241,24 @@ namespace ProyectoADS1.Migrations
                     b.HasIndex("IdConcesionario");
 
                     b.ToTable("FichaInspeccion");
+
+                    b.HasData(
+                        new
+                        {
+                            IdInspeccion = 1,
+                            AreaSupervisada = "Almacén Principal",
+                            Departamento = "Lambayeque",
+                            Direccion = "Av. Central 123",
+                            Email = "norte@correo.pe",
+                            FechaProgramada = new DateOnly(2025, 5, 10),
+                            IdConcesionario = 1,
+                            MotivoInspeccion = "Supervisión rutinaria del local",
+                            NombreComercial = "Correo Norte SAC",
+                            Provincia = "Chiclayo",
+                            RazonSocial = "Correo Norte S.A.C.",
+                            Ruc = "20481234567",
+                            Telefono = "074-123456"
+                        });
                 });
 
             modelBuilder.Entity("ProyectoADS1.Models.InformeInspeccion", b =>
@@ -336,6 +397,18 @@ namespace ProyectoADS1.Migrations
                         .HasName("PK__Usuario__645723A6DDB296B6");
 
                     b.ToTable("Usuario");
+
+                    b.HasData(
+                        new
+                        {
+                            IdUsuario = 1,
+                            Activo = true,
+                            Correo = "admincsp@empresa.com",
+                            Dni = 73613466,
+                            NombreUsuario = "Anderson Villegas Cruz",
+                            Password = "admin123",
+                            Rol = "CoordinadorCSP"
+                        });
                 });
 
             modelBuilder.Entity("ProyectoADS1.Models.ActaInspeccion", b =>
