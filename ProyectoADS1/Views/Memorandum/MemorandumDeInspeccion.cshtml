@@ -1,0 +1,67 @@
+﻿@model ProyectoADS1.Models.MemorandumInspeccion
+
+@{
+    ViewData["Title"] = "MemorandumDeInspeccion";
+}
+
+<h1>MemorandumDeInspeccion</h1>
+
+<h4>MemorandumInspeccion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="MemorandumDeInspeccion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdMemo" />
+            <div class="form-group">
+                <label asp-for="IdInspeccion" class="control-label"></label>
+                <input asp-for="IdInspeccion" class="form-control" >
+                <span asp-validation-for="IdInspeccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Asunto" class="control-label"></label>
+                <input asp-for="Asunto" class="form-control" />
+                <span asp-validation-for="Asunto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cuerpo" class="control-label"></label>
+                <input asp-for="Cuerpo" class="form-control" />
+                <span asp-validation-for="Cuerpo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirmaCoordinadorGeneral" class="control-label"></label>
+                <input asp-for="FirmaCoordinadorGeneral" class="form-control" />
+                <span asp-validation-for="FirmaCoordinadorGeneral" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirmaCoordinador" class="control-label"></label>
+                <input asp-for="FirmaCoordinador" class="form-control" />
+                <span asp-validation-for="FirmaCoordinador" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirmaDirectorGeneral" class="control-label"></label>
+                <input asp-for="FirmaDirectorGeneral" class="form-control" />
+                <span asp-validation-for="FirmaDirectorGeneral" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaRegistro" class="control-label"></label>
+                <input asp-for="FechaRegistro" class="form-control" />
+                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaActualizada" class="control-label"></label>
+                <input asp-for="FechaActualizada" class="form-control" />
+                <span asp-validation-for="FechaActualizada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-secondary" asp-action="Index" asp-controller="Inspeccion">Regresar</a>
+
+</div>
+

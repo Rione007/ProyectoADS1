@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ProyectoADS1.Models.Concesionario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Lista Mensual de Concesionarios Postales</h3>
+
+<p >
+    <a class="btn btn-success" asp-action="NuevaConcesionaria">Añadir Concesionario</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreComercial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RazonSocial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ruc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Departamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Provincia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Distrito)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreComercial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazonSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ruc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Provincia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Distrito)
+            </td>
+             <td>
+                 @(item.Estado ? "Activo" : "Inactivo")
+             </td>
+
+            <td>
+                    <a class="btn btn-sm btn-primary" asp-action="Editar" asp-route-id="@item.Ruc">Editar</a> |
+                    <a class="btn btn-sm btn-info" asp-action="Detalles" asp-route-id="@item.Ruc">Detalles</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

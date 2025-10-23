@@ -1,0 +1,107 @@
+﻿@model ProyectoADS1.Models.FichaInspeccion
+
+@{
+    ViewData["Title"] = "FichaRegistral";
+}
+
+<h1>FichaRegistral</h1>
+
+
+<div class="container row">
+    <div class="col-md-10">
+
+        <div class="form-control">
+            <h5>Detalles de Inspeccion:</h5>
+            <div class="form-control d-flex">
+                <div class="form-group g col-md-3">
+                    <label asp-for="IdInspeccion" class="control-label"></label>
+                    <input asp-for="IdInspeccion" class="form-control col-md-5" readonly />
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Estado" class="control-label"></label>
+                    <input asp-for="Estado" class="form-control col-md-5" readonly />
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="form-group col-md-7">
+                    <label asp-for="AreaSupervisada" class="control-label"></label>
+                    <input asp-for="AreaSupervisada" class="form-control" readonly />
+                </div>
+                <div class="form-group col-md-5">
+                    <label asp-for="FechaProgramada" class="control-label"></label>
+                    <input type="date" asp-for="FechaProgramada" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="MotivoInspeccion" class="control-label"></label>
+                    <textarea asp-for="MotivoInspeccion" class="form-control" rows="3" readonly> </textarea>
+                </div>
+            </div>
+        </div>
+
+        <div>
+
+            <div class="form-control">
+                <h5>Datos de Concesionario:</h5>
+                <div class="row g-3">
+                    <div class="form-group col-md-3">
+                        <label asp-for="Ruc" class="control-label"></label>
+                        <input asp-for="Ruc" class="form-control col-md-5" readonly />
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="form-group col-md-4">
+                            <label asp-for="NombreComercial" class="control-label"></label>
+                            <input asp-for="NombreComercial" class="form-control" readonly />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="RazonSocial" class="control-label"></label>
+                            <input asp-for="RazonSocial" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label asp-for="Direccion" class="control-label"></label>
+                        <input asp-for="Direccion" class="form-control" readonly />
+                    </div>
+                    <div class="row g-3">
+                        <div class="form-group col-md-4">
+                            <label asp-for="Departamento" class="control-label"></label>
+                            <input asp-for="Departamento" class="form-control" readonly />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Provincia" class="control-label"></label>
+                            <input asp-for="Provincia" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="form-group col-md-4">
+                            <label asp-for="Telefono" class="control-label"></label>
+                            <input asp-for="Telefono" class="form-control" readonly />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group d-flex">
+                <div>
+                    <a class="btn btn-secondary" asp-action="Index">Regresar</a>
+                    <a class="btn btn-primary" asp-action="CrearActa" asp-controller="Acta" asp-route-id="@Model.IdInspeccion">Generar Acta de Inspeccion</a>
+                </div>
+                <div class="ms-auto">
+                    <em>Ultima vez actualizada: </em>
+                    <em class="col-sm-10">
+                        @Html.DisplayFor(model => model.FechaActualizada)
+                    </em>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

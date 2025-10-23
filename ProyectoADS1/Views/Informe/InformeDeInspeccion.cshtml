@@ -1,0 +1,163 @@
+﻿@model ProyectoADS1.Models.InformeInspeccion
+
+@{
+    ViewData["Title"] = "InformeDeInspeccion";
+}
+
+
+<div class="d-flex col-md-10">
+    <h4>Informe de Inspeccion</h4>
+
+    <div class="ms-auto">
+        <em class="col-sm-10">
+            IdInforme: IN000@(@Model.IdInspeccion)
+        </em>
+    </div>
+</div>
+
+<hr />
+<div class="container container row">
+    <div class="col-md-10">
+        <div class="form-control">
+            <h5>Datos de Concesionario:</h5>
+            <div class="row g-3">
+                <div class="form-group col-md-3">
+                    <label asp-for="IdInspeccionNavigation.Ruc" class="control-label"></label>
+                    <input asp-for="IdInspeccionNavigation.Ruc" class="form-control col-md-5" readonly />
+                </div>
+
+                <div class="row g-3">
+                    <div class="form-group col-md-4">
+                        <label asp-for="IdInspeccionNavigation.NombreComercial" class="control-label"></label>
+                        <input asp-for="IdInspeccionNavigation.NombreComercial" class="form-control" readonly />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="IdInspeccionNavigation.RazonSocial" class="control-label"></label>
+                        <input asp-for="IdInspeccionNavigation.RazonSocial" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group col-md-8">
+                    <label asp-for="IdInspeccionNavigation.Direccion" class="control-label"></label>
+                    <input asp-for="IdInspeccionNavigation.Direccion" class="form-control" readonly />
+                </div>
+                <div class="row g-3">
+                    <div class="form-group col-md-4">
+                        <label asp-for="IdInspeccionNavigation.Departamento" class="control-label"></label>
+                        <input asp-for="IdInspeccionNavigation.Departamento" class="form-control" readonly />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="IdInspeccionNavigation.Provincia" class="control-label"></label>
+                        <input asp-for="IdInspeccionNavigation.Provincia" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="form-group col-md-4">
+                        <label asp-for="IdInspeccionNavigation.Telefono" class="control-label"></label>
+                        <input asp-for="IdInspeccionNavigation.Telefono" class="form-control" readonly />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="IdInspeccionNavigation.Email" class="control-label"></label>
+                        <input asp-for="IdInspeccionNavigation.Email" class="form-control" readonly />
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+        <div class="form-control">
+            <h5>Detalles de Inspeccion:</h5>
+            <div class="form-group d-flex">
+                <div class="form-group g col-md-3">
+                    <label asp-for="IdInspeccion" class="control-label"></label>
+                    <input asp-for="IdInspeccion" class="form-control col-md-5" readonly />
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="form-group col-md-7">
+                    <label asp-for="IdInspeccionNavigation.AreaSupervisada" class="control-label"></label>
+                    <input asp-for="IdInspeccionNavigation.AreaSupervisada" class="form-control" readonly />
+                </div>
+                <div class="form-group col-md-5">
+                    <label asp-for="IdInspeccionNavigation.FechaProgramada" class="control-label"></label>
+                    <input type="date" asp-for="IdInspeccionNavigation.FechaProgramada" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdInspeccionNavigation.MotivoInspeccion" class="control-label"></label>
+                    <textarea asp-for="IdInspeccionNavigation.MotivoInspeccion" class="form-control" rows="3" readonly> </textarea>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdInspeccionNavigation.ActaInspeccion.Observaciones" class="control-label"></label>
+                    <input asp-for="IdInspeccionNavigation.ActaInspeccion.Observaciones" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdInspeccionNavigation.ActaInspeccion.Recomendaciones" class="control-label"></label>
+                    <input asp-for="IdInspeccionNavigation.ActaInspeccion.Recomendaciones" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdInspeccionNavigation.ActaInspeccion.Conclusiones" class="control-label"></label>
+                    <input asp-for="IdInspeccionNavigation.ActaInspeccion.Conclusiones" class="form-control" readonly />
+                </div>
+            </div>
+        </div>
+        <form asp-action="BuscarUsuarioPorId" method="post">
+            <div class="form-control col-md-7">
+                <div class="d-flex">
+                    <em class="col-md-3">Ingresar ID usuario</em>
+                    <input asp-for="IdUsuario" class="form-control" />
+                    <button type="submit" class="btn btn-secondary col-md-3 ms-2">Buscar Id</button>
+                </div>
+                <div>
+                    @ViewBag.advertencia
+                </div>
+            </div>
+        </form>
+        <div class="form-control">
+            <form asp-action="InformeDeInspeccion">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="IdInspeccion" />
+                <div class="form-group">
+                    <input type="hidden" asp-for="IdUsuario" class="form-control" asp-items="ViewBag.IdUsuario">
+                    <span asp-validation-for="IdUsuario" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdUsuarioNavigation.NombreUsuario" class="control-label"></label>
+                    <input asp-for="IdUsuarioNavigation.NombreUsuario" class="form-control" readonly />
+                    <span asp-validation-for="IdUsuarioNavigation.NombreUsuario" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdUsuarioNavigation.Correo" class="control-label"></label>
+                    <input asp-for="IdUsuarioNavigation.Correo" class="form-control" readonly />
+                    <span asp-validation-for="IdUsuarioNavigation.Correo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdUsuarioNavigation.Rol" class="control-label"></label>
+                    <input asp-for="IdUsuarioNavigation.Rol" class="form-control" readonly />
+                    <span asp-validation-for="IdUsuarioNavigation.Rol" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FirmaSupervisor" class="control-label"></label>
+                    <input asp-for="FirmaSupervisor" class="form-control" />
+                    <span asp-validation-for="FirmaSupervisor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FirmaCoordinador" class="control-label"></label>
+                    <input asp-for="FirmaCoordinador" class="form-control" />
+                    <span asp-validation-for="FirmaCoordinador" class="text-danger"></span>
+                </div>
+                <hr />
+                <div class="form-group d-flex">
+                    <div>
+                        <a class="btn btn-secondary" asp-action="Index" asp-controller="Inspeccion">Regresar</a>
+
+                    </div>
+                    <div class="ms-auto">
+                        <input type="submit" value="Guardar" class="btn btn-primary " />
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+

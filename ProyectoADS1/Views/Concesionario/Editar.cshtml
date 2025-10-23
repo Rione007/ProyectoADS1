@@ -1,0 +1,89 @@
+﻿@model ProyectoADS1.Models.Concesionario
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h1>Editar</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Editar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdConcesionario" />
+            <div class="form-group">
+                <label asp-for="NombreComercial" class="control-label"></label>
+                <input asp-for="NombreComercial" class="form-control" />
+                <span asp-validation-for="NombreComercial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RazonSocial" class="control-label"></label>
+                <input asp-for="RazonSocial" class="form-control" />
+                <span asp-validation-for="RazonSocial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ruc" class="control-label"></label>
+                <input asp-for="Ruc" class="form-control" readonly/>
+                <span asp-validation-for="Ruc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion" class="control-label"></label>
+                <input asp-for="Direccion" class="form-control" />
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Departamento" class="control-label"></label>
+                <input asp-for="Departamento" class="form-control" />
+                <span asp-validation-for="Departamento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Provincia" class="control-label"></label>
+                <input asp-for="Provincia" class="form-control" />
+                <span asp-validation-for="Provincia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Distrito" class="control-label"></label>
+                <input asp-for="Distrito" class="form-control" />
+                <span asp-validation-for="Distrito" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefono" class="control-label"></label>
+                <input asp-for="Telefono" class="form-control" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Estado</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Estado" value="true" checked="@(Model.Estado ? "checked" : null)" />
+                    <label class="form-check-label">Activo</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Estado" value="false" checked="@(Model.Estado ? null : "checked")" />
+                    <label class="form-check-label">Inactivo</label>
+                </div>
+            </div>
+            <hr />
+            <div>
+                @ViewBag.mensaje
+            </div>
+            <hr />
+            <div class="form-group d-flex">
+                <input type="submit" value="Actualizar" class="btn btn-primary" />
+                <div>
+                    <a class="btn btn-secondary" asp-action="Index">Regresar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
