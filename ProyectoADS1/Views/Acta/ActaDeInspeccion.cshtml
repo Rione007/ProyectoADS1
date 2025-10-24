@@ -205,23 +205,48 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script>
-        function setupSignature(canvasId, clearBtnId, saveBtnId, hiddenInputId, label) {
+        function setupSignature(canvasId, clearBtnId, saveBtnId, hiddenInputId, label, existingDataUrl) {
             const canvas = document.getElementById(canvasId);
             const pad = new SignaturePad(canvas);
 
+            if (existingDataUrl) {
+                const img = new Image();
+                img.onload = () => {
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                };
+                img.src = existingDataUrl;
+            }
+
             document.getElementById(clearBtnId).addEventListener("click", () => pad.clear());
+
             document.getElementById(saveBtnId).addEventListener("click", () => {
                 if (pad.isEmpty()) {
-                    alert(`⚠️ Dibuje la ${label} antes de guardar.`);
+                    alert(`Dibuje la ${label} antes de guardar.`);
                     return;
                 }
                 const dataUrl = pad.toDataURL();
                 document.getElementById(hiddenInputId).value = dataUrl;
-                alert(`✅ ${label} guardada correctamente.`);
+                alert(` ${label} guardada correctamente.`);
             });
         }
+        setupSignature(
+            "firmaSupervisor",
+            "btnLimpiarSupervisor",
+            "btnGuardarSupervisor",
+            "FirmaSupervisorImagen",
+            "firma del supervisor",
+            '@Html.Raw(Model.FirmaSupervisorImagen != null ? Model.FirmaSupervisorImagen : "")'
+        );
 
-        setupSignature("firmaSupervisor", "btnLimpiarSupervisor", "btnGuardarSupervisor", "FirmaSupervisorImagen", "firma del supervisor");
-        setupSignature("firmaAdministrado", "btnLimpiarAdministrado", "btnGuardarAdministrado", "FirmaAdministradoImagen", "firma del administrado");
+        setupSignature(
+            "firmaAdministrado",
+            "btnLimpiarAdministrado",
+            "btnGuardarAdministrado",
+            "FirmaAdministradoImagen",
+            "firma del administrado",
+            '@Html.Raw(Model.FirmaAdministradoImagen != null ? Model.FirmaAdministradoImagen : "")'
+        );
     </script>
 }
+

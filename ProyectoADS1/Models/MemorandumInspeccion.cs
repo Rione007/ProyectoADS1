@@ -21,11 +21,9 @@ public partial class MemorandumInspeccion
     [Column(TypeName = "text")]
     public string Cuerpo { get; set; }
 
-    public bool? FirmaCoordinadorGeneral { get; set; }
-
-    public bool? FirmaCoordinador { get; set; }
-
-    public bool? FirmaDirectorGeneral { get; set; }
+    public string? FirmaCoordinadorGeneral { get; set; }  
+    public string? FirmaCoordinador { get; set; }    
+    public string? FirmaDirectorGeneral { get; set; }    
 
     [Column(TypeName = "datetime")]
     public DateTime? FechaRegistro { get; set; }

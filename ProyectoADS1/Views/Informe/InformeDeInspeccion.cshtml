@@ -1,163 +1,263 @@
 ﻿@model ProyectoADS1.Models.InformeInspeccion
 
 @{
-    ViewData["Title"] = "InformeDeInspeccion";
+    ViewData["Title"] = "Informe de Inspección";
 }
 
+<style>
+    body {
+        background-color: #f0f2f5;
+    }
 
-<div class="d-flex col-md-10">
-    <h4>Informe de Inspeccion</h4>
+    .documento {
+        background-color: white;
+        max-width: 850px;
+        margin: 40px auto;
+        padding: 40px 60px;
+        border: 1px solid #dcdcdc;
+        box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        border-radius: 10px;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-    <div class="ms-auto">
-        <em class="col-sm-10">
-            IdInforme: IN000@(@Model.IdInspeccion)
-        </em>
+    .titulo {
+        text-align: center;
+        font-weight: bold;
+        font-size: 22px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    .subtitulo {
+        font-weight: bold;
+        font-size: 18px;
+        color: #2b3a55;
+        margin-top: 25px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #dcdcdc;
+        padding-bottom: 5px;
+    }
+
+    .campo {
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 3px;
+    }
+
+    input[readonly], textarea[readonly] {
+        background-color: #f8f9fa;
+    }
+
+    .firma-section {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+    }
+
+    .firma-box {
+        width: 45%;
+        text-align: center;
+    }
+
+        .firma-box canvas {
+            border: 1px solid #ccc;
+            width: 100%;
+            height: 150px;
+            border-radius: 6px;
+        }
+
+    .acciones-firma {
+        margin-top: 5px;
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+
+    .id-info {
+        text-align: right;
+        font-style: italic;
+        color: gray;
+        margin-bottom: 10px;
+    }
+</style>
+<form asp-action="InformeDeInspeccion" method="post">
+    <input type="hidden" asp-for="IdInspeccion" />
+    <input type="hidden" asp-for="IdUsuario"/>
+
+    <div class="documento">
+        <div class="titulo">Informe de Inspección</div>
+        <div class="id-info">ID Informe:@Model.IdInspeccion</div>
+
+        <!-- DATOS DEL CONCESIONARIO -->
+        <div class="subtitulo">Datos del Concesionario</div>
+        <div class="row">
+            <div class="col-md-4 campo">
+                <label>RUC</label>
+                <input asp-for="IdInspeccionNavigation.Ruc" class="form-control" readonly />
+            </div>
+            <div class="col-md-4 campo">
+                <label>Nombre Comercial</label>
+                <input asp-for="IdInspeccionNavigation.NombreComercial" class="form-control" readonly />
+            </div>
+            <div class="col-md-4 campo">
+                <label>Razón Social</label>
+                <input asp-for="IdInspeccionNavigation.RazonSocial" class="form-control" readonly />
+            </div>
+        </div>
+
+        <div class="campo">
+            <label>Dirección</label>
+            <input asp-for="IdInspeccionNavigation.Direccion" class="form-control" readonly />
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 campo">
+                <label>Departamento</label>
+                <input asp-for="IdInspeccionNavigation.Departamento" class="form-control" readonly />
+            </div>
+            <div class="col-md-4 campo">
+                <label>Provincia</label>
+                <input asp-for="IdInspeccionNavigation.Provincia" class="form-control" readonly />
+            </div>
+            <div class="col-md-4 campo">
+                <label>Teléfono</label>
+                <input asp-for="IdInspeccionNavigation.Telefono" class="form-control" readonly />
+            </div>
+        </div>
+
+        <div class="campo">
+            <label>Email</label>
+            <input asp-for="IdInspeccionNavigation.Email" class="form-control" readonly />
+        </div>
+
+        <!-- DETALLES DE INSPECCIÓN -->
+        <div class="subtitulo">Detalles de Inspección</div>
+        <div class="campo">
+            <label>Área Supervisada</label>
+            <input asp-for="IdInspeccionNavigation.AreaSupervisada" class="form-control" readonly />
+        </div>
+
+        <div class="campo">
+            <label>Fecha Programada</label>
+            <input type="date" asp-for="IdInspeccionNavigation.FechaProgramada" class="form-control" readonly />
+        </div>
+
+        <div class="campo">
+            <label>Motivo de Inspección</label>
+            <textarea asp-for="IdInspeccionNavigation.MotivoInspeccion" class="form-control" rows="3" readonly></textarea>
+        </div>
+
+        <div class="campo">
+            <label>Observaciones</label>
+            <textarea asp-for="IdInspeccionNavigation.ActaInspeccion.Observaciones" class="form-control" rows="3" readonly></textarea>
+        </div>
+
+        <div class="campo">
+            <label>Recomendaciones</label>
+            <textarea asp-for="IdInspeccionNavigation.ActaInspeccion.Recomendaciones" class="form-control" rows="3" readonly></textarea>
+        </div>
+
+        <div class="campo">
+            <label>Conclusiones</label>
+            <textarea asp-for="IdInspeccionNavigation.ActaInspeccion.Conclusiones" class="form-control" rows="3" readonly></textarea>
+        </div>
+
+        <!-- FIRMAS -->
+        <div class="subtitulo">Firmas</div>
+        <div class="firma-section">
+            <div class="firma-box">
+                <h6>Firma del Supervisor</h6>
+                <canvas id="firmaSupervisor"></canvas>
+                <div class="acciones-firma">
+                    <button type="button" id="btnLimpiarSupervisor" class="btn btn-outline-secondary btn-sm">Limpiar</button>
+                    <button type="button" id="btnGuardarSupervisor" class="btn btn-outline-success btn-sm">Guardar</button>
+                </div>
+                <input type="hidden" asp-for="FirmaSupervisorImagen" id="FirmaSupervisorImagen" />
+            </div>
+
+            <div class="firma-box">
+                <h6>Firma del Coordinador</h6>
+                <canvas id="firmaCoordinador"></canvas>
+                <div class="acciones-firma">
+                    <button type="button" id="btnLimpiarCoordinador" class="btn btn-outline-secondary btn-sm">Limpiar</button>
+                    <button type="button" id="btnGuardarCoordinador" class="btn btn-outline-success btn-sm">Guardar</button>
+                </div>
+                <input type="hidden" asp-for="FirmaCoordinadorImagen" id="FirmaCoordinadorImagen" />
+            </div>
+        </div>
+
+        <!-- BOTONES -->
+        <hr />
+        <div class="d-flex mt-3">
+            <a class="btn btn-secondary" asp-action="Index" asp-controller="Inspeccion">Regresar</a>
+            <button type="submit" class="btn btn-primary ms-auto">Guardar</button>
+        </div>
     </div>
-</div>
-
-<hr />
-<div class="container container row">
-    <div class="col-md-10">
-        <div class="form-control">
-            <h5>Datos de Concesionario:</h5>
-            <div class="row g-3">
-                <div class="form-group col-md-3">
-                    <label asp-for="IdInspeccionNavigation.Ruc" class="control-label"></label>
-                    <input asp-for="IdInspeccionNavigation.Ruc" class="form-control col-md-5" readonly />
-                </div>
-
-                <div class="row g-3">
-                    <div class="form-group col-md-4">
-                        <label asp-for="IdInspeccionNavigation.NombreComercial" class="control-label"></label>
-                        <input asp-for="IdInspeccionNavigation.NombreComercial" class="form-control" readonly />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="IdInspeccionNavigation.RazonSocial" class="control-label"></label>
-                        <input asp-for="IdInspeccionNavigation.RazonSocial" class="form-control" readonly />
-                    </div>
-                </div>
-                <div class="form-group col-md-8">
-                    <label asp-for="IdInspeccionNavigation.Direccion" class="control-label"></label>
-                    <input asp-for="IdInspeccionNavigation.Direccion" class="form-control" readonly />
-                </div>
-                <div class="row g-3">
-                    <div class="form-group col-md-4">
-                        <label asp-for="IdInspeccionNavigation.Departamento" class="control-label"></label>
-                        <input asp-for="IdInspeccionNavigation.Departamento" class="form-control" readonly />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="IdInspeccionNavigation.Provincia" class="control-label"></label>
-                        <input asp-for="IdInspeccionNavigation.Provincia" class="form-control" readonly />
-                    </div>
-                </div>
-                <div class="row g-3">
-                    <div class="form-group col-md-4">
-                        <label asp-for="IdInspeccionNavigation.Telefono" class="control-label"></label>
-                        <input asp-for="IdInspeccionNavigation.Telefono" class="form-control" readonly />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="IdInspeccionNavigation.Email" class="control-label"></label>
-                        <input asp-for="IdInspeccionNavigation.Email" class="form-control" readonly />
-                    </div>
-                </div>
-                <br />
-            </div>
-        </div>
-        <div class="form-control">
-            <h5>Detalles de Inspeccion:</h5>
-            <div class="form-group d-flex">
-                <div class="form-group g col-md-3">
-                    <label asp-for="IdInspeccion" class="control-label"></label>
-                    <input asp-for="IdInspeccion" class="form-control col-md-5" readonly />
-                </div>
-            </div>
-            <div class="row g-3">
-                <div class="form-group col-md-7">
-                    <label asp-for="IdInspeccionNavigation.AreaSupervisada" class="control-label"></label>
-                    <input asp-for="IdInspeccionNavigation.AreaSupervisada" class="form-control" readonly />
-                </div>
-                <div class="form-group col-md-5">
-                    <label asp-for="IdInspeccionNavigation.FechaProgramada" class="control-label"></label>
-                    <input type="date" asp-for="IdInspeccionNavigation.FechaProgramada" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <label asp-for="IdInspeccionNavigation.MotivoInspeccion" class="control-label"></label>
-                    <textarea asp-for="IdInspeccionNavigation.MotivoInspeccion" class="form-control" rows="3" readonly> </textarea>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IdInspeccionNavigation.ActaInspeccion.Observaciones" class="control-label"></label>
-                    <input asp-for="IdInspeccionNavigation.ActaInspeccion.Observaciones" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <label asp-for="IdInspeccionNavigation.ActaInspeccion.Recomendaciones" class="control-label"></label>
-                    <input asp-for="IdInspeccionNavigation.ActaInspeccion.Recomendaciones" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <label asp-for="IdInspeccionNavigation.ActaInspeccion.Conclusiones" class="control-label"></label>
-                    <input asp-for="IdInspeccionNavigation.ActaInspeccion.Conclusiones" class="form-control" readonly />
-                </div>
-            </div>
-        </div>
-        <form asp-action="BuscarUsuarioPorId" method="post">
-            <div class="form-control col-md-7">
-                <div class="d-flex">
-                    <em class="col-md-3">Ingresar ID usuario</em>
-                    <input asp-for="IdUsuario" class="form-control" />
-                    <button type="submit" class="btn btn-secondary col-md-3 ms-2">Buscar Id</button>
-                </div>
-                <div>
-                    @ViewBag.advertencia
-                </div>
-            </div>
-        </form>
-        <div class="form-control">
-            <form asp-action="InformeDeInspeccion">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="IdInspeccion" />
-                <div class="form-group">
-                    <input type="hidden" asp-for="IdUsuario" class="form-control" asp-items="ViewBag.IdUsuario">
-                    <span asp-validation-for="IdUsuario" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IdUsuarioNavigation.NombreUsuario" class="control-label"></label>
-                    <input asp-for="IdUsuarioNavigation.NombreUsuario" class="form-control" readonly />
-                    <span asp-validation-for="IdUsuarioNavigation.NombreUsuario" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IdUsuarioNavigation.Correo" class="control-label"></label>
-                    <input asp-for="IdUsuarioNavigation.Correo" class="form-control" readonly />
-                    <span asp-validation-for="IdUsuarioNavigation.Correo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IdUsuarioNavigation.Rol" class="control-label"></label>
-                    <input asp-for="IdUsuarioNavigation.Rol" class="form-control" readonly />
-                    <span asp-validation-for="IdUsuarioNavigation.Rol" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FirmaSupervisor" class="control-label"></label>
-                    <input asp-for="FirmaSupervisor" class="form-control" />
-                    <span asp-validation-for="FirmaSupervisor" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FirmaCoordinador" class="control-label"></label>
-                    <input asp-for="FirmaCoordinador" class="form-control" />
-                    <span asp-validation-for="FirmaCoordinador" class="text-danger"></span>
-                </div>
-                <hr />
-                <div class="form-group d-flex">
-                    <div>
-                        <a class="btn btn-secondary" asp-action="Index" asp-controller="Inspeccion">Regresar</a>
-
-                    </div>
-                    <div class="ms-auto">
-                        <input type="submit" value="Guardar" class="btn btn-primary " />
-                    </div>
-                </div>
-            </form>
-        </div>
+</form>
 
 
-    </div>
-</div>
 
 
+@section Scripts {
+    <script>
+        function setupSignature(canvasId, clearId, saveId, inputId, existingDataUrl) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext("2d");
+            let drawing = false;
+
+            // ✅ Si hay una firma guardada, dibujarla
+            if (existingDataUrl && existingDataUrl.startsWith("data:image")) {
+                const img = new Image();
+                img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                img.src = existingDataUrl;
+            }
+
+            canvas.addEventListener("mousedown", () => drawing = true);
+            canvas.addEventListener("mouseup", () => drawing = false);
+            canvas.addEventListener("mousemove", draw);
+
+            function draw(e) {
+                if (!drawing) return;
+                ctx.lineWidth = 2;
+                ctx.lineCap = "round";
+                ctx.strokeStyle = "#000";
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(e.offsetX, e.offsetY);
+            }
+
+            document.getElementById(clearId).addEventListener("click", () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+
+            document.getElementById(saveId).addEventListener("click", () => {
+                const dataUrl = canvas.toDataURL("image/png");
+                document.getElementById(inputId).value = dataUrl;
+                alert("Firma guardada correctamente.");
+            });
+        }
+
+        setupSignature(
+            "firmaSupervisor",
+            "btnLimpiarSupervisor",
+            "btnGuardarSupervisor",
+            "FirmaSupervisorImagen",
+            '@Html.Raw(Model.FirmaSupervisorImagen != null ? Model.FirmaSupervisorImagen : "")'
+        );
+
+        setupSignature(
+            "firmaCoordinador",
+            "btnLimpiarCoordinador",
+            "btnGuardarCoordinador",
+            "FirmaCoordinadorImagen",
+            '@Html.Raw(Model.FirmaCoordinadorImagen != null ? Model.FirmaCoordinadorImagen : "")'
+        );
+
+    </script>
+}

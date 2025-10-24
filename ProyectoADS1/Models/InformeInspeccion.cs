@@ -14,9 +14,9 @@ public partial class InformeInspeccion
 
     public int? IdUsuario { get; set; }
 
-    public bool? FirmaSupervisor { get; set; }
+    public string? FirmaSupervisorImagen { get; set; }
 
-    public bool? FirmaCoordinador { get; set; }
+    public string? FirmaCoordinadorImagen { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? FechaRegistro { get; set; }

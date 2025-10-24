@@ -41,5 +41,35 @@ namespace ProyectoADS1.Controllers
             var reg = BuscarMemo(id);
             return View(reg);
         }
+
+        [HttpPost]
+        public IActionResult MemorandumDeInspeccion(MemorandumInspeccion model)
+        {
+
+            var existente = context.MemorandumInspeccions
+                .FirstOrDefault(m => m.IdInspeccion == model.IdInspeccion);
+
+            if (existente != null)
+            {
+
+                existente.Asunto = model.Asunto;
+                existente.Cuerpo = model.Cuerpo;
+                existente.FirmaCoordinadorGeneral = model.FirmaCoordinadorGeneral;
+                existente.FirmaCoordinador = model.FirmaCoordinador;
+                existente.FirmaDirectorGeneral = model.FirmaDirectorGeneral;
+                existente.FechaActualizada = DateTime.Now;
+            }
+            else
+            {
+                model.FechaRegistro = DateTime.Now;
+                model.FechaActualizada = DateTime.Now;
+                context.MemorandumInspeccions.Add(model);
+            }
+
+            context.SaveChanges();
+
+            return RedirectToAction("MemorandumDeInspeccion", new { id = model.IdInspeccion });
+        }
+
     }
 }

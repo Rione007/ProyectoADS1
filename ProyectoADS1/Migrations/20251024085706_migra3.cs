@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoADS1.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrafirmas : Migration
+    public partial class migra3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -114,8 +114,8 @@ namespace ProyectoADS1.Migrations
                 {
                     IdInspeccion = table.Column<int>(type: "int", nullable: false),
                     IdUsuario = table.Column<int>(type: "int", nullable: true),
-                    FirmaSupervisor = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
-                    FirmaCoordinador = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    FirmaSupervisorImagen = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirmaCoordinadorImagen = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FechaRegistro = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())")
                 },
                 constraints: table =>
@@ -142,9 +142,9 @@ namespace ProyectoADS1.Migrations
                     IdInspeccion = table.Column<int>(type: "int", nullable: false),
                     Asunto = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Cuerpo = table.Column<string>(type: "text", nullable: true),
-                    FirmaCoordinadorGeneral = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
-                    FirmaCoordinador = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
-                    FirmaDirectorGeneral = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    FirmaCoordinadorGeneral = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirmaCoordinador = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirmaDirectorGeneral = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FechaRegistro = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
                     FechaActualizada = table.Column<DateTime>(type: "datetime", nullable: true)
                 },

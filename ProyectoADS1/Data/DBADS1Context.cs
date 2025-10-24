@@ -72,8 +72,7 @@ public partial class DBADS1Context : DbContext
 
             entity.Property(e => e.IdInspeccion).ValueGeneratedNever();
             entity.Property(e => e.FechaRegistro).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.FirmaCoordinador).HasDefaultValue(false);
-            entity.Property(e => e.FirmaSupervisor).HasDefaultValue(false);
+
 
             entity.HasOne(d => d.IdInspeccionNavigation).WithOne(p => p.InformeInspeccion)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -87,9 +86,6 @@ public partial class DBADS1Context : DbContext
             entity.HasKey(e => e.IdMemo).HasName("PK__Memorand__4D7D50869C42DFBC");
 
             entity.Property(e => e.FechaRegistro).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.FirmaCoordinador).HasDefaultValue(false);
-            entity.Property(e => e.FirmaCoordinadorGeneral).HasDefaultValue(false);
-            entity.Property(e => e.FirmaDirectorGeneral).HasDefaultValue(false);
 
             entity.HasOne(d => d.IdInspeccionNavigation).WithOne(p => p.MemorandumInspeccion)
                 .OnDelete(DeleteBehavior.ClientSetNull)

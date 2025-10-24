@@ -1,67 +1,220 @@
 ﻿@model ProyectoADS1.Models.MemorandumInspeccion
 
 @{
-    ViewData["Title"] = "MemorandumDeInspeccion";
+    ViewData["Title"] = "Memorándum de Inspección";
 }
 
-<h1>MemorandumDeInspeccion</h1>
+<style>
+    body {
+        background-color: #f0f2f5;
+    }
 
-<h4>MemorandumInspeccion</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="MemorandumDeInspeccion">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdMemo" />
-            <div class="form-group">
-                <label asp-for="IdInspeccion" class="control-label"></label>
-                <input asp-for="IdInspeccion" class="form-control" >
-                <span asp-validation-for="IdInspeccion" class="text-danger"></span>
+    .documento {
+        background-color: white;
+        max-width: 850px;
+        margin: 40px auto;
+        padding: 40px 60px;
+        border: 1px solid #dcdcdc;
+        box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        border-radius: 10px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .titulo {
+        text-align: center;
+        font-weight: bold;
+        font-size: 22px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    .subtitulo {
+        font-weight: bold;
+        font-size: 18px;
+        color: #2b3a55;
+        margin-top: 25px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #dcdcdc;
+        padding-bottom: 5px;
+    }
+
+    .campo {
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 3px;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+        input[readonly], textarea[readonly] {
+            background-color: #f8f9fa;
+        }
+
+    .firma-section {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+    }
+
+    .firma-box {
+        width: 30%;
+        text-align: center;
+    }
+
+        .firma-box canvas {
+            border: 1px solid #ccc;
+            width: 100%;
+            height: 150px;
+            border-radius: 6px;
+        }
+
+    .acciones-firma {
+        margin-top: 5px;
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+
+    .id-info {
+        text-align: right;
+        font-style: italic;
+        color: gray;
+        margin-bottom: 10px;
+    }
+</style>
+
+<form asp-action="MemorandumDeInspeccion" method="post">
+    <input type="hidden" asp-for="IdMemo" />
+    <input type="hidden" asp-for="IdInspeccion" />
+
+    <div class="documento">
+        <div class="titulo">Memorándum de Inspección</div>
+        <div class="id-info">ID Inspección: @Model.IdInspeccion</div>
+
+        <div class="campo">
+            <label asp-for="Asunto">Asunto</label>
+            <input asp-for="Asunto" class="form-control" />
+        </div>
+
+        <div class="campo">
+            <label asp-for="Cuerpo">Contenido</label>
+            <textarea asp-for="Cuerpo" class="form-control" rows="8" placeholder="Ingrese el cuerpo del memorándum..."></textarea>
+        </div>
+
+        <div class="subtitulo">Firmas</div>
+
+        <div class="firma-section">
+            <div class="firma-box">
+                <h6>Firma Coordinador General</h6>
+                <canvas id="firmaCG"></canvas>
+                <div class="acciones-firma">
+                    <button type="button" id="btnLimpiarCG" class="btn btn-outline-secondary btn-sm">Limpiar</button>
+                    <button type="button" id="btnGuardarCG" class="btn btn-outline-success btn-sm">Guardar</button>
+                </div>
+                <input type="hidden" asp-for="FirmaCoordinadorGeneral" id="FirmaCoordinadorGeneral" />
             </div>
-            <div class="form-group">
-                <label asp-for="Asunto" class="control-label"></label>
-                <input asp-for="Asunto" class="form-control" />
-                <span asp-validation-for="Asunto" class="text-danger"></span>
+
+            <div class="firma-box">
+                <h6>Firma Coordinador</h6>
+                <canvas id="firmaC"></canvas>
+                <div class="acciones-firma">
+                    <button type="button" id="btnLimpiarC" class="btn btn-outline-secondary btn-sm">Limpiar</button>
+                    <button type="button" id="btnGuardarC" class="btn btn-outline-success btn-sm">Guardar</button>
+                </div>
+                <input type="hidden" asp-for="FirmaCoordinador" id="FirmaCoordinador" />
             </div>
-            <div class="form-group">
-                <label asp-for="Cuerpo" class="control-label"></label>
-                <input asp-for="Cuerpo" class="form-control" />
-                <span asp-validation-for="Cuerpo" class="text-danger"></span>
+
+            <div class="firma-box">
+                <h6>Firma Director General</h6>
+                <canvas id="firmaDG"></canvas>
+                <div class="acciones-firma">
+                    <button type="button" id="btnLimpiarDG" class="btn btn-outline-secondary btn-sm">Limpiar</button>
+                    <button type="button" id="btnGuardarDG" class="btn btn-outline-success btn-sm">Guardar</button>
+                </div>
+                <input type="hidden" asp-for="FirmaDirectorGeneral" id="FirmaDirectorGeneral" />
             </div>
-            <div class="form-group">
-                <label asp-for="FirmaCoordinadorGeneral" class="control-label"></label>
-                <input asp-for="FirmaCoordinadorGeneral" class="form-control" />
-                <span asp-validation-for="FirmaCoordinadorGeneral" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirmaCoordinador" class="control-label"></label>
-                <input asp-for="FirmaCoordinador" class="form-control" />
-                <span asp-validation-for="FirmaCoordinador" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirmaDirectorGeneral" class="control-label"></label>
-                <input asp-for="FirmaDirectorGeneral" class="form-control" />
-                <span asp-validation-for="FirmaDirectorGeneral" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaRegistro" class="control-label"></label>
-                <input asp-for="FechaRegistro" class="form-control" />
-                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaActualizada" class="control-label"></label>
-                <input asp-for="FechaActualizada" class="form-control" />
-                <span asp-validation-for="FechaActualizada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
+        <hr />
+        <div class="d-flex mt-3">
+            <a class="btn btn-secondary" asp-action="Index" asp-controller="Inspeccion">Regresar</a>
+            <button type="submit" class="btn btn-primary ms-auto">Guardar Memorándum</button>
+        </div>
     </div>
-</div>
+</form>
 
-<div>
-    <a class="btn btn-secondary" asp-action="Index" asp-controller="Inspeccion">Regresar</a>
+@section Scripts {
+    <script>
+        function setupSignature(canvasId, clearId, saveId, inputId, existingDataUrl) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext("2d");
+            let drawing = false;
 
-</div>
+            // ✅ Si hay firma guardada, mostrarla
+            if (existingDataUrl && existingDataUrl.startsWith("data:image")) {
+                const img = new Image();
+                img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                img.src = existingDataUrl;
+            }
 
+            canvas.addEventListener("mousedown", () => drawing = true);
+            canvas.addEventListener("mouseup", () => {
+                drawing = false;
+                ctx.beginPath();
+            });
+            canvas.addEventListener("mousemove", draw);
+
+            function draw(e) {
+                if (!drawing) return;
+                ctx.lineWidth = 2;
+                ctx.lineCap = "round";
+                ctx.strokeStyle = "#000";
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(e.offsetX, e.offsetY);
+            }
+
+            document.getElementById(clearId).addEventListener("click", () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+
+            document.getElementById(saveId).addEventListener("click", () => {
+                const dataUrl = canvas.toDataURL("image/png");
+                document.getElementById(inputId).value = dataUrl;
+                alert("Firma guardada correctamente.");
+            });
+        }
+
+        setupSignature(
+            "firmaCG",
+            "btnLimpiarCG",
+            "btnGuardarCG",
+            "FirmaCoordinadorGeneral",
+            '@Html.Raw(Model.FirmaCoordinadorGeneral != null ? Model.FirmaCoordinadorGeneral : "")'
+        );
+
+        setupSignature(
+            "firmaC",
+            "btnLimpiarC",
+            "btnGuardarC",
+            "FirmaCoordinador",
+            '@Html.Raw(Model.FirmaCoordinador != null ? Model.FirmaCoordinador : "")'
+        );
+
+        setupSignature(
+            "firmaDG",
+            "btnLimpiarDG",
+            "btnGuardarDG",
+            "FirmaDirectorGeneral",
+            '@Html.Raw(Model.FirmaDirectorGeneral != null ? Model.FirmaDirectorGeneral : "")'
+        );
+    </script>
+}

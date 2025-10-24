@@ -271,15 +271,11 @@ namespace ProyectoADS1.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
-                    b.Property<bool?>("FirmaCoordinador")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    b.Property<string>("FirmaCoordinadorImagen")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("FirmaSupervisor")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    b.Property<string>("FirmaSupervisorImagen")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("IdUsuario")
                         .HasColumnType("int");
@@ -315,20 +311,14 @@ namespace ProyectoADS1.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
-                    b.Property<bool?>("FirmaCoordinador")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    b.Property<string>("FirmaCoordinador")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("FirmaCoordinadorGeneral")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    b.Property<string>("FirmaCoordinadorGeneral")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("FirmaDirectorGeneral")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    b.Property<string>("FirmaDirectorGeneral")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IdInspeccion")
                         .HasColumnType("int");

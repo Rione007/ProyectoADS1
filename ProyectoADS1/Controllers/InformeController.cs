@@ -35,9 +35,9 @@ namespace ProyectoADS1.Controllers
         public InformeInspeccion BuscarInforme(int id)
         {
             return context.InformeInspeccions
-                .Include(i => i.IdInspeccionNavigation) // Carga la FichaInspeccion
-                    .ThenInclude(f => f.ActaInspeccion)  // Desde la Ficha, carga la ActaInspeccion
-                .Include(i => i.IdUsuarioNavigation)     // Usuario que generó el informe (si existe)
+                .Include(i => i.IdInspeccionNavigation) 
+                    .ThenInclude(f => f.ActaInspeccion)  
+                .Include(i => i.IdUsuarioNavigation)    
                 .FirstOrDefault(i => i.IdInspeccion == id);
         }
         public IActionResult InformeDeInspeccion(int id)
@@ -45,5 +45,39 @@ namespace ProyectoADS1.Controllers
              var reg = BuscarInforme(id);
             return View(reg);
         }
+
+        [HttpPost]
+        public IActionResult InformeDeInspeccion(InformeInspeccion model)
+        {
+            var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
+
+            if (usuarioId == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            model.IdUsuario = usuarioId;
+
+            var existente = context.InformeInspeccions
+                .FirstOrDefault(i => i.IdInspeccion == model.IdInspeccion);
+
+            if (existente != null)
+            {
+                existente.FirmaSupervisorImagen = model.FirmaSupervisorImagen;
+                existente.FirmaCoordinadorImagen = model.FirmaCoordinadorImagen;
+                existente.FechaRegistro = model.FechaRegistro ?? DateTime.Now;
+                existente.IdUsuario = model.IdUsuario;
+            }
+            else
+            {
+                model.FechaRegistro = DateTime.Now;
+                context.InformeInspeccions.Add(model);
+            }
+
+            context.SaveChanges();
+
+            return RedirectToAction("InformeDeInspeccion", new { id = model.IdInspeccion });
+        }
+
     }
 }
