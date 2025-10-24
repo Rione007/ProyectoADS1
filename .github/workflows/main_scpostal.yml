@@ -23,11 +23,13 @@ jobs:
         with:
           dotnet-version: '9.x'
 
+      # ✅ Compilar el proyecto principal (no toda la solución)
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build ProyectoADS1/ProyectoADS1.csproj --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      # ✅ Publicar el proyecto MVC
+      - name: Publish app
+        run: dotnet publish ProyectoADS1/ProyectoADS1.csproj --configuration Release --output ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -62,4 +64,3 @@ jobs:
           app-name: 'SCPostal'
           slot-name: 'Production'
           package: .
-          
