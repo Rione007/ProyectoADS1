@@ -56,5 +56,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'scpostal-hbbvg7e2cdhrcqbv'   # <--- nombre real
+          app-name: 'SCPostal'
           package: .
+
