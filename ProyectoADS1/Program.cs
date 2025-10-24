@@ -11,7 +11,7 @@ builder.Services.AddSession();
 
 
 builder.Services.AddDbContext<DBADS1Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("cnx")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("cadena")));
 
 var app = builder.Build();
 
