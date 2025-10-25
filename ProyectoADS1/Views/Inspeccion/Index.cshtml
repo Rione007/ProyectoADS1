@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProyectoADS1.Models.FichaInspeccion>
+﻿@model ProyectoADS1.Models.InspeccionViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +7,10 @@
 <h3>Programa de Supervision y Control Postal</h3>
 
 <p>
-    <a class="btn btn-success" asp-action="NuevaInspeccion">Añadir Nueva Inspeccion</a>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#InspeccionModal">
+        Añadir Nueva Inspeccion
+    </button>
     <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalDetalles">Detalles</a>
 </p>
 <form method="get" asp-action="Index" class="mb-3 d-flex gap-2 align-items-center">
@@ -25,31 +28,31 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdInspeccion)
+                @Html.DisplayNameFor(model => model.Inspecciones.First().IdInspeccion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ruc)
+                @Html.DisplayNameFor(model => model.Inspecciones.First().Ruc)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NombreComercial)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Departamento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Provincia)
+                @Html.DisplayNameFor(model => model.Inspecciones.First().NombreComercial)
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.AreaSupervisada)
+                @Html.DisplayNameFor(model => model.Inspecciones.First().Departamento)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaProgramada)
+                @Html.DisplayNameFor(model => model.Inspecciones.First().Provincia)
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.Estado)
+                @Html.DisplayNameFor(model => model.Inspecciones.First().AreaSupervisada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inspecciones.First().FechaProgramada)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Inspecciones.First().Estado)
             </th>
             <th>
                 @Html.DisplayName("Ficha Registral")
@@ -58,7 +61,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Inspecciones) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.IdInspeccion)
@@ -139,11 +142,116 @@
     </div>
 </div>
 
+<!-- =================== MODAL NUEVA INSPECCIÓN =================== -->
+<div class="modal fade" id="InspeccionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="exampleModalLabel">Nueva Inspección</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3">
+                    <label asp-for="NuevaInspeccion.IdInspeccion" class="control-label"></label>
+                    <input asp-for="NuevaInspeccion.IdInspeccion" class="form-control" readonly />
+                </div>
+
+                <!-- BUSCAR CONCESIONARIO POR RUC -->
+                <div class="form-control mb-3">
+                    <label asp-for="NuevaInspeccion.Ruc" class="control-label"></label>
+                    <div class="d-flex">
+                        <input asp-for="NuevaInspeccion.Ruc" id="txtRuc" class="form-control" />
+                        <button type="button" id="btnBuscarRuc" class="btn btn-secondary col-md-3 ms-2">Buscar RUC</button>
+                    </div>
+                    <div id="advertencia" class="text-danger mt-1"></div>
+                </div>
+
+                <!-- FORMULARIO DE NUEVA INSPECCIÓN -->
+                <form id="formNuevaInspeccion">
+                    <input type="hidden" asp-for="NuevaInspeccion.IdConcesionario" />
+                    <input type="hidden" asp-for="NuevaInspeccion.Ruc" id="hiddenRuc" />
+
+                    <div class="form-control mb-3">
+                        <h5>Datos del Concesionario</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label asp-for="NuevaInspeccion.NombreComercial"></label>
+                                <input asp-for="NuevaInspeccion.NombreComercial" class="form-control" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="NuevaInspeccion.RazonSocial"></label>
+                                <input asp-for="NuevaInspeccion.RazonSocial" class="form-control" readonly />
+                            </div>
+                        </div>
+
+                        <div class="mt-2">
+                            <label asp-for="NuevaInspeccion.Direccion"></label>
+                            <input asp-for="NuevaInspeccion.Direccion" class="form-control" readonly />
+                        </div>
+
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-6">
+                                <label asp-for="NuevaInspeccion.Departamento"></label>
+                                <input asp-for="NuevaInspeccion.Departamento" class="form-control" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="NuevaInspeccion.Provincia"></label>
+                                <input asp-for="NuevaInspeccion.Provincia" class="form-control" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-6">
+                                <label asp-for="NuevaInspeccion.Telefono"></label>
+                                <input asp-for="NuevaInspeccion.Telefono" class="form-control" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="NuevaInspeccion.Email"></label>
+                                <input asp-for="NuevaInspeccion.Email" class="form-control" readonly />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-control">
+                        <h5>Detalles de la Inspección</h5>
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <label asp-for="NuevaInspeccion.AreaSupervisada"></label>
+                                <input asp-for="NuevaInspeccion.AreaSupervisada" class="form-control" required />
+                            </div>
+                            <div class="col-md-5">
+                                <label asp-for="NuevaInspeccion.FechaProgramada"></label>
+                                <input type="date" asp-for="NuevaInspeccion.FechaProgramada" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <label asp-for="NuevaInspeccion.MotivoInspeccion"></label>
+                            <textarea asp-for="NuevaInspeccion.MotivoInspeccion" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="button" id="btnLimpiarModal" class="btn btn-outline-secondary">Limpiar Campos</button>
+                        <button type="submit" class="btn btn-success">Guardar Inspección</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const modal = document.getElementById('ModalDetalles');
             const selectDep = document.getElementById("selectDepartamento");
+            const modalInspeccion = document.getElementById('InspeccionModal')
 
             // Al abrir el modal, cargar departamentos y total general
             modal.addEventListener('show.bs.modal', function () {
@@ -177,6 +285,114 @@
                         document.getElementById("totalDepartamento").textContent = data;
                     });
             });
+
+            modalInspeccion.addEventListener('show.bs.modal', function () {
+            fetch('/Inspeccion/ObtenerSiguienteId')
+                .then(r => r.json())
+                .then(data => {
+                    const idInput = modalInspeccion.querySelector('input[name="NuevaInspeccion.IdInspeccion"]');
+                    if (idInput) {
+                        idInput.value = data;
+                    }
+                })
+                .catch(error => console.error('Error al obtener el siguiente ID:', error));
+            });
+        });
+
+                // === BUSCAR CONCESIONARIO POR RUC ===
+        document.getElementById("btnBuscarRuc").addEventListener("click", async () => {
+            const ruc = document.getElementById("txtRuc").value.trim();
+            const adv = document.getElementById("advertencia");
+            adv.textContent = "";
+
+            if (!ruc) {
+                adv.textContent = "Ingrese un RUC primero.";
+                return;
+            }
+
+            try {
+                const res = await fetch(`/Inspeccion/BuscarConcesionarioPorRuc?ruc=${encodeURIComponent(ruc)}`);
+                const data = await res.json();
+
+                if (!data.success) {
+                    adv.textContent = data.message || "RUC no encontrado.";
+                    return;
+                }
+
+                const c = data.data;
+                document.querySelector('[name="NuevaInspeccion.IdConcesionario"]').value = c.idConcesionario;
+                document.querySelector('[name="NuevaInspeccion.Ruc"]').value = c.ruc;
+                document.getElementById('hiddenRuc').value = c.ruc;
+                document.querySelector('[name="NuevaInspeccion.NombreComercial"]').value = c.nombreComercial;
+                document.querySelector('[name="NuevaInspeccion.RazonSocial"]').value = c.razonSocial;
+                document.querySelector('[name="NuevaInspeccion.Direccion"]').value = c.direccion;
+                document.querySelector('[name="NuevaInspeccion.Departamento"]').value = c.departamento;
+                document.querySelector('[name="NuevaInspeccion.Provincia"]').value = c.provincia;
+                document.querySelector('[name="NuevaInspeccion.Telefono"]').value = c.telefono;
+                document.querySelector('[name="NuevaInspeccion.Email"]').value = c.email;
+            } catch {
+                adv.textContent = "Error al buscar el RUC.";
+            }
+        });
+
+                // === GUARDAR NUEVA INSPECCIÓN ===
+        document.getElementById("formNuevaInspeccion").addEventListener("submit", async e => {
+            e.preventDefault();
+
+            const form = e.target;
+            const data = {
+                IdConcesionario: form.querySelector('[name="NuevaInspeccion.IdConcesionario"]').value,
+                Ruc: form.querySelector('[name="NuevaInspeccion.Ruc"]').value,
+                NombreComercial: form.querySelector('[name="NuevaInspeccion.NombreComercial"]').value,
+                RazonSocial: form.querySelector('[name="NuevaInspeccion.RazonSocial"]').value,
+                Direccion: form.querySelector('[name="NuevaInspeccion.Direccion"]').value,
+                Departamento: form.querySelector('[name="NuevaInspeccion.Departamento"]').value,
+                Provincia: form.querySelector('[name="NuevaInspeccion.Provincia"]').value,
+                Telefono: form.querySelector('[name="NuevaInspeccion.Telefono"]').value,
+                Email: form.querySelector('[name="NuevaInspeccion.Email"]').value,
+                AreaSupervisada: form.querySelector('[name="NuevaInspeccion.AreaSupervisada"]').value,
+                FechaProgramada: form.querySelector('[name="NuevaInspeccion.FechaProgramada"]').value,
+                MotivoInspeccion: form.querySelector('[name="NuevaInspeccion.MotivoInspeccion"]').value,
+                Estado: "Pendiente"
+            };
+
+            try {
+                const res = await fetch("/Inspeccion/NuevaInspeccion", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+
+                alert(result.message);
+                if (result.success) {
+                    location.reload();
+                }
+            } catch {
+                alert("Error al guardar la inspección.");
+            }
+        });
+
+        document.getElementById("btnLimpiarModal").addEventListener("click",()=>{
+
+        document.querySelector('[name="NuevaInspeccion.IdConcesionario"]').value = "";
+        document.querySelector('[name="NuevaInspeccion.Ruc"]').value = "";
+        document.getElementById("hiddenRuc").value = "";
+        document.querySelector('[name="NuevaInspeccion.NombreComercial"]').value = "";
+        document.querySelector('[name="NuevaInspeccion.RazonSocial"]').value = "";
+        document.querySelector('[name="NuevaInspeccion.Direccion"]').value = "";
+        document.querySelector('[name="NuevaInspeccion.Departamento"]').value = "";
+        document.querySelector('[name="NuevaInspeccion.Provincia"]').value = "";
+        document.querySelector('[name="NuevaInspeccion.Telefono"]').value = "";
+        document.querySelector('[name="NuevaInspeccion.Email"]').value = "";
+
+
+        document.querySelector('[name="NuevaInspeccion.AreaSupervisada"]').value = "";
+        document.querySelector('[name="NuevaInspeccion.FechaProgramada"]').value = "";
+        document.querySelector('[name="NuevaInspeccion.MotivoInspeccion"]').value = "";
+
+        document.getElementById("advertencia").textContent = "";
+
         });
     </script>
 }

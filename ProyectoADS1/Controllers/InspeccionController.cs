@@ -39,14 +39,22 @@ namespace ProyectoADS1.Controllers
                 ViewBag.mensaje = "No hay inspecciones que coincidan con el filtro.";
             }
 
-            return View(list);
+            var vm = new InspeccionViewModel
+            {
+                Inspecciones = list,
+                NuevaInspeccion = new FichaInspeccion()
+            };
+
+            return View(vm);
         }
 
 
-        public int ObtenerSiguienteId() 
+        public JsonResult ObtenerSiguienteId() 
         {
-            int siguienteId = context.FichaInspeccions.OrderByDescending(f => f.IdInspeccion).Select(f => f.IdInspeccion).FirstOrDefault() + 1;
-            return siguienteId;
+            int ultimoId = context.FichaInspeccions.OrderByDescending(f => f.IdInspeccion).Select(f => f.IdInspeccion).FirstOrDefault();
+
+            int siguienteId = (ultimoId > 0 ? ultimoId + 1:1);
+            return Json(siguienteId);
         }
 
         public IActionResult NuevaInspeccion()
@@ -55,52 +63,59 @@ namespace ProyectoADS1.Controllers
             return View(new FichaInspeccion());
         }
         [HttpPost]
-        public IActionResult NuevaInspeccion(FichaInspeccion reg)
+        public IActionResult NuevaInspeccion([FromBody] FichaInspeccion reg)
         {
             try
             {
                     context.FichaInspeccions.Add(reg);
                     context.SaveChanges();
-                    ViewBag.SiguienteId = reg.IdInspeccion;
-                    ViewBag.mensaje = "Inspeccion añadida con exito!";
-                    return View(reg);
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Inspección añadida con éxito.",
+                    id = reg.IdInspeccion
+                });
             }
             catch (Exception ex)
             {
-                ViewBag.SiguienteId = reg.IdInspeccion;
-                ViewBag.mensaje = "Error al añadir inspeccion: "+ ex;
-                
+                return Json(new
+                {
+                    success = false,
+                    message = "Error al añadir inspección: " + ex.Message
+                });
+
             }
-            return View(reg);
         }
 
         public IActionResult BuscarConcesionarioPorRuc(string Ruc)
         {
+            if (string.IsNullOrWhiteSpace(Ruc))
+                return Json(new { success = false, message = "RUC Vacio" });
+
             Ruc = Ruc.Trim();
             var concs = BuscarPorRUC(Ruc);
-            if(concs != null)
+            
+            if (concs == null)
             {
-                var model = new FichaInspeccion
+                return Json(new { success = false, message = "Concesionario no encontrado." });
+            }
+            return Json(new
+            {
+                success = true,
+                data = new
                 {
-                    IdConcesionario = concs.IdConcesionario,
-                    Ruc = Ruc,
-                    NombreComercial = concs.NombreComercial,
-                    RazonSocial = concs.RazonSocial,
-                    Direccion = concs.Direccion,
-                    Departamento = concs.Departamento,
-                    Provincia = concs.Provincia,
-                    Telefono = concs.Telefono,
-                    Email = concs.Email
-                };
-                ViewBag.SiguienteId = ObtenerSiguienteId();
-                return View("NuevaInspeccion", model);
-            }
-            else
-            {
-                ViewBag.SiguienteId = ObtenerSiguienteId();
-                ViewBag.advertencia = "RUC no encontrado.";
-                return View("NuevaInspeccion");
-            }
+                    concs.IdConcesionario,
+                    concs.Ruc,
+                    concs.NombreComercial,
+                    concs.RazonSocial,
+                    concs.Direccion,
+                    concs.Departamento,
+                    concs.Provincia,
+                    concs.Telefono,
+                    concs.Email
+                }
+            });
 
         }
 
